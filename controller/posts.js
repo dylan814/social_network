@@ -36,5 +36,6 @@ const createPost = function (req, res) {
 
 }
 
+// good soldier
 // this is a new comment that i want removed after the commit
 module.exports = {getPosts, createPost};
