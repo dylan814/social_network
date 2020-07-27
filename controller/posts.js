@@ -36,5 +36,6 @@ const createPost = function (req, res) {
 
 }
 
+// added something
 
 module.exports = {getPosts, createPost};
