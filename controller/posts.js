@@ -36,7 +36,5 @@ const createPost = function (req, res) {
 
 }
 
-// this is a commit i need removed
-module.exports = {getPosts, createPost};
 
-// console.log(module);
+module.exports = {getPosts, createPost};
