@@ -39,3 +39,4 @@ const createPost = function (req, res) {
 // this is a new comment that i want removed after the commit
 module.exports = {getPosts, createPost};
 // xwxwx
+// fefwf
