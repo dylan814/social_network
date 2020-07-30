@@ -2,7 +2,7 @@ const Post = require("../models/posts.js");
 const uuidv1 = require("uuidv1");
 
 
-console.log(uuidv1);
+
 
 const getPosts = (req, res) => {
 

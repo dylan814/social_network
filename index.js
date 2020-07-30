@@ -7,7 +7,8 @@ const expressValidator = require('express-validator')
 
 const app = express();
 const postRoutes = require('./routes/posts');
-// const {getPosts} = require('./controller/posts');
+const authRoutes = require('./routes/auth');
+
 dotenv.config();
 
 mongoose.connect(process.env.MONGO_URI,{ useNewUrlParser: true,  useUnifiedTopology: true  }).then(() => console.log("db connected"));
@@ -24,6 +25,7 @@ app.use(bodyParser.json());
 app.use(expressValidator());
 
 app.use('/', postRoutes);
+app.use('/', authRoutes);
 
 // app.get("/", getPosts);
 
