@@ -1,22 +1,34 @@
-
-const express = require('express');
-const {getPosts, createPost, 
+const express = require("express");
+const {
+    getPosts,
+    createPost,
     postsByUser,
     postById,
     isPoster,
     updatePost,
-    deletePost} = require('../controller/posts');
-
+    deletePost,
+    photo,
+    singlePost,
+    like,
+    unlike,
+    comment,
+    uncomment
+} = require("../controller/posts");
 const { requireSignin } = require("../controller/auth");
 const { userById } = require("../controller/user");
 const { createPostValidator } = require("../validator");
 
-
-const validator = require('../validator');
-
 const router = express.Router();
 
-router.get("/posts", getPosts );
+router.get("/posts", getPosts);
+// like unlike
+router.put("/post/like", requireSignin, like);
+router.put("/post/unlike", requireSignin, unlike);
+
+// comments
+router.put("/post/comment", requireSignin, comment);
+router.put("/post/uncomment", requireSignin, uncomment);
+
 
 router.post(
     "/post/new/:userId",
@@ -24,18 +36,16 @@ router.post(
     createPost,
     createPostValidator
 );
-
-
-
-
 router.get("/posts/by/:userId", requireSignin, postsByUser);
+router.get("/post/:postId", singlePost);
 router.put("/post/:postId", requireSignin, isPoster, updatePost);
 router.delete("/post/:postId", requireSignin, isPoster, deletePost);
+// photo
+router.get("/post/photo/:postId", photo);
 
 // any route containing :userId, our app will first execute userById()
 router.param("userId", userById);
 // any route containing :postId, our app will first execute postById()
 router.param("postId", postById);
-
 
 module.exports = router;

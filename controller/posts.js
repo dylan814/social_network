@@ -25,9 +25,13 @@ const postById = (req, res, next, id) => {
 const getPosts = (req, res) => {
 
         const posts = Post.find()
-            .select("_id title body")
+            .populate("postedBy", "_id name")
+            .populate("comments", "text created")
+            .populate("comments.postedBy", "_id name")
+            .select("_id title body created ")
+            .sort({ created: -1 })
             .then(posts => {
-                res.json({ posts });
+                res.json( posts );
             })
             .catch(err => console.log(err));
     
@@ -140,7 +144,99 @@ const deletePost = (req, res) => {
     });
 };
 
+
+const singlePost = (req, res) => {
+    return res.json(req.post);
+};
+
+
+const photo = (req, res, next) => {
+    res.set("Content-Type", req.post.photo.contentType);
+    return res.send(req.post.photo.data);
+};
+
+
+const like = (req, res) => {
+    Post.findByIdAndUpdate(
+        req.body.postId,
+        { $push: { likes: req.body.userId } },
+        { new: true }
+    ).exec((err, result) => {
+        if (err) {
+            return res.status(400).json({
+                error: err
+            });
+        } else {
+            res.json(result);
+        }
+    });
+};
+
+const unlike = (req, res) => {
+    Post.findByIdAndUpdate(
+        req.body.postId,
+        { $pull: { likes: req.body.userId } },
+        { new: true }
+    ).exec((err, result) => {
+        if (err) {
+            return res.status(400).json({
+                error: err
+            });
+        } else {
+            res.json(result);
+        }
+    });
+};
+
+
+const comment = (req, res) => {
+    let comment = req.body.comment;
+    comment.postedBy = req.body.userId;
+
+    Post.findByIdAndUpdate(
+        req.body.postId,
+        { $push: { comments: comment } },
+        { new: true }
+    )
+        .populate("comments.postedBy", "_id name")
+        .populate("postedBy", "_id name")
+        .exec((err, result) => {
+            if (err) {
+                return res.status(400).json({
+                    error: err
+                });
+            } else {
+                res.json(result);
+            }
+        });
+};
+
+
+const uncomment = (req, res) => {
+    let comment = req.body.comment;
+
+    Post.findByIdAndUpdate(
+        req.body.postId,
+        { $pull: { comments: { _id: comment._id } } },
+        { new: true }
+    )
+        .populate("comments.postedBy", "_id name")
+        .populate("postedBy", "_id name")
+        .exec((err, result) => {
+            if (err) {
+                return res.status(400).json({
+                    error: err
+                });
+            } else {
+                res.json(result);
+            }
+        });
+};
+
+
+
 // this is a new comment that i want removed after the commit
-module.exports = {getPosts, createPost,isPoster, deletePost, updatePost, postById, postsByUser};
+module.exports = {getPosts, createPost,isPoster, deletePost, 
+    updatePost, postById, postsByUser, singlePost,photo, like, unlike,comment, uncomment};
 
 // test3

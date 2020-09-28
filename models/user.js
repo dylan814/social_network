@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const uuidv1 = require('uuidv1');
 const crypto = require('crypto');
+const { ObjectId } = mongoose.Schema;
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -32,6 +33,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
+    following: [{ type: ObjectId, ref: "User" }],
+    followers: [{ type: ObjectId, ref: "User" }],
+    resetPasswordLink: {
+        data: String,
+        default: ""
+    }
 });
 
 /**
