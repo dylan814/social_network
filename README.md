@@ -20,5 +20,5 @@ This project involved:
 * Created the react front end and other packages like React Router, etc. Please see the react-front folder and then open the src folder to see the react code. 
 * Deployed React code on one Docker container, nginx as a reverse proxy, NodeJS on the third Docker container on AWS EC2 instance. 
 
-Live project can be found here.
+Live project: http://ec2-3-25-188-73.ap-southeast-2.compute.amazonaws.com/
 
