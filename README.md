@@ -1,4 +1,5 @@
-# social_network
+# The Social Network Project
+
 This is a git project for building a social network app using React, Node and friends.
 
 Please see the front-end React code for this project here: 
