@@ -1,7 +1,8 @@
 # The Social Network Project
 
-This is a git project for building a social network app using React, Node and friends.
+The files are part of Udemy course about how to build a social network project using React and Node. 
 
-Please see the front-end React code for this project here: 
+This project involved: 
+	implement CRUD (create, read, update, delete) on users/posts.
+	Building Authentication with Username/Password, Forgot/Password and Password Reset using JWT authentication.
 
-https://github.com/dylan814/react-front
